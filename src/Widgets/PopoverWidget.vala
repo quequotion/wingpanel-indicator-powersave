@@ -35,14 +35,14 @@ namespace Powersave {
 
             int top = 0;
 
-            add_system_wide (top);
+            top = add_system_wide (top);
 
             if (pstate) {
-                add_turbo_boost (top);
+                top = add_turbo_boost (top);
             }
 
-            add_hyperthreads (top);
-            add_governor (top);
+            top = add_hyperthreads (top);
+            top = add_governor (top);
             add_gpu (top);
         }
 
