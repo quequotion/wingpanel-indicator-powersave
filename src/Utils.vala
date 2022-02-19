@@ -1,5 +1,9 @@
 /*
+ * Wingpanel CPU frequency indicator
  * Copyright (c) 2018-2020 Dirli <litandrej85@gmail.com>
+ *
+ * Wingpanel Powersave indicator
+ * Copyright (c) 2022-2022 Que Quotion <quequotion@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +20,7 @@
  *
  */
 
-namespace CPUfreq {
+namespace Powersave {
     public class Utils {
         public static bool can_manage () {
             return GLib.FileUtils.test (CPU_PATH + "cpu0/cpufreq", FileTest.IS_DIR);
@@ -46,19 +50,37 @@ namespace CPUfreq {
             }
         }
 
-        public static double get_freq_pct (string adv) {
-            string cur_freq_pct = Utils.get_content (CPU_PATH + "intel_pstate/" + adv + "_perf_pct");
+        public static void set_ht (bool state) {
+            string state_str = state ? "0" : "1";
+            string def_ht = Utils.get_content (CPU_PATH + "smt/control");
 
-            return double.parse (cur_freq_pct);
+            if (def_ht != state_str && Utils.get_permission ().allowed) {
+                string cli_cmd = @"-h $(state ? "on" : "off")";
+
+                Utils.run_cli (cli_cmd);
+            }
         }
 
-        public static void set_freq_scaling (string adv, double new_val) {
-            if (Utils.get_freq_pct (adv) != new_val && Utils.get_permission ().allowed) {
-                if (new_val >= 25 && new_val <= 100) {
-                    string cli_cmd = " -f %s:%.0f".printf (adv, new_val);
-                    Utils.run_cli (cli_cmd);
-                }
-            }
+        public static void set_gpu (bool state) {
+            string state_str = state ? "0" : "1";
+            //string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
+
+            //if (def_gpu != state_str && Utils.get_permission ().allowed) {
+                string cli_cmd = @"-v $(state ? "on" : "off")";
+
+                Utils.run_cli (cli_cmd);
+            //}
+        }
+
+        public static void set_sw (bool state) {
+            string state_str = state ? "0" : "1";
+            //string def_sw = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
+
+            //if (def_sw != state_str && Utils.get_permission ().allowed) {
+                string cli_cmd = @"-s $(state ? "on" : "off")";
+
+                Utils.run_cli (cli_cmd);
+            //}
         }
 
         public static string get_content (string file_path) {
@@ -78,8 +100,10 @@ namespace CPUfreq {
             return content.chomp ();
         }
 
-        public static string[] get_available_values (string path) {
-            string val_str = Utils.get_content (CPU_PATH + @"cpu0/cpufreq/scaling_available_$path");
+        //public static string[] get_available_values (string path) {
+        public static string[] get_available_values () {
+            //string val_str = Utils.get_content (CPU_PATH + @"cpu0/cpufreq/scaling_available_$path");
+            string val_str = "powersave performance");
             return val_str.split (" ");
         }
 
@@ -104,7 +128,7 @@ namespace CPUfreq {
             string stdout;
             string stderr;
             int status;
-            string cli_path = "pkexec /usr/bin/io.elementary.cpufreq.modifier ";
+            string cli_path = "pkexec /usr/bin/io.elementary.powersave.modifier ";
             string cmd = cli_path + cmd_par;
 
             try {
@@ -125,7 +149,7 @@ namespace CPUfreq {
             }
 
             try {
-                permission = new Polkit.Permission.sync ("io.elementary.wingpanel.cpufreq.setcpufreq", new Polkit.UnixProcess (Posix.getpid ()));
+                permission = new Polkit.Permission.sync ("io.elementary.wingpanel.powersave.controlpwr", new Polkit.UnixProcess (Posix.getpid ()));
                 return permission;
             } catch (Error e) {
                 critical (e.message);

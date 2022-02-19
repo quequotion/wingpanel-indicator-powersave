@@ -1,7 +1,7 @@
-Source: wingpanel-indicator-cpufreq
+Source: wingpanel-indicator-powersave
 Section: x11
 Priority: optional
-Maintainer: dirli <litandrej85@gmail.com>
+Maintainer: Que Quotion <quequotion@gmail.com>
 Build-Depends: debhelper-compat (= 13),
                libgranite-dev,
                libpolkit-gobject-1-dev,
@@ -12,12 +12,12 @@ Build-Depends: debhelper-compat (= 13),
                meson,
                valac
 Standards-Version: 4.5.0
-Homepage: https://github.com/Dirli/wingpanel-indicator-cpufreq
+Homepage: https://github.com/quequotion/wingpanel-indicator-powersave
 Rules-Requires-Root: no
 
-Package: wingpanel-indicator-cpufreq
+Package: wingpanel-indicator-powersave
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: wingpanel
-Description: Wingpanel CPUfreq indicator to control processor frequency
- Wingpanel-indicator-cpufreq is able to adjust the Intel p-state driver (Sandy Bridge and newer)
+Description: Wingpanel Powersave indicator to control system power usage
+ Wingpanel-indicator-powersave is a user-discretion power management utility

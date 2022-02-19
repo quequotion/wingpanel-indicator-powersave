@@ -1,13 +1,5 @@
-# Wingpanel CPU frequency indicator
-wingpanel-indicator-cpufreq is able to adjust the Intel p-state driver (Sandy Bridge and newer)
-
-<p align="left">
-    <a href="https://paypal.me/Dirli85">
-        <img src="https://img.shields.io/badge/Donate-PayPal-green.svg">
-    </a>
-</p>
-
-NOTE I recently lost the ability to test turbo boost. if you can give me feedback that the latest changes are working correctly, it will be great
+# Wingpanel Powersave indicator
+wingpanel-indicator-powersave is a user-discretion power management utility, serving as a front-end to [throttlectl](https://github.com/quequotion/pantheon-qq/tree/master/throttlectl), a command-line user-discretion power management utility written in bash.
 
 ---
 
@@ -17,7 +9,9 @@ NOTE I recently lost the ability to test turbo boost. if you can give me feedbac
 
 ## Building and Installation
 
-### You'll need the following dependencies:
+### For Debian and derivatives (Ubuntu, elementary OS, etc):
+
+#### You'll need the following dependencies:
 * libgranite-dev
 * libpolkit-gobject-1-dev
 * libglib2.0-dev
@@ -27,7 +21,15 @@ NOTE I recently lost the ability to test turbo boost. if you can give me feedbac
 * meson
 * valac
 
-### How to build
+#### How to build
+    git clone https://github.com/quequotion/wingpanel-indicator-powersave.git
+    cd wingpanel-indicator-powersave/
     meson build --prefix=/usr
     ninja -C build
     sudo ninja -C build install
+
+### For Archlinux and derivatives (Manjaro, Artix, etc)
+
+A package is available in the AUR: [wingpanel-indicator-powersave-git](https://aur.archlinux.org/wingpanel-indicator-powersave-git).
+
+See the comments for instructions on building it without an AUR helper.

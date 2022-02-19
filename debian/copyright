@@ -1,9 +1,10 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: wingpanel-indicator-cpufreq
-Source: https://github.com/Dirli/wingpanel-indicator-cpufreq
+Upstream-Name: wingpanel-indicator-powersave
+Source: https://github.com/quequotion/wingpanel-indicator-powersave
 
 Files: *
-Copyright: 2018-2021 dirli <litandrej85@gmail.com>
+Copyright: wingpanel-indicator-cpufreq 2018-2021 Dirli <litandrej85@gmail.com>
+           wingpanel-indicator-powersave 2022-2022 Que Quotion <quequotion@gmail.com>
 License: GPL-3.0+
 
 License: GPL-3.0+

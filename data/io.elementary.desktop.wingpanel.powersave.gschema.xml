@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/io/elementary/desktop/wingpanel/powersave/" id="io.elementary.desktop.wingpanel.powersave">
+      <key type="b" name="system-wide">
+        <default>true</default>
+        <summary>System-wide</summary>
+        <description>Saves the state of system-side runtime power management</description>
+      </key>
+      <key type="s" name="governor">
+        <default>""</default>
+        <summary>Governor</summary>
+        <description>Saves the state of the governor</description>
+      </key>
+      <key type="b" name="turbo-boost">
+        <default>true</default>
+        <summary>Turbo boost</summary>
+        <description>Saves the state of the Turbo boost</description>
+      </key>
+      <key type="b" name="hyperthreads">
+        <default>true</default>
+        <summary>Hyperthreads</summary>
+        <description>Saves the state of the hyperthreads</description>
+      </key>
+      <key type="b" name="gpu">
+        <default>true</default>
+        <summary>GPU</summary>
+        <description>Saves the state of the GPU power mode</description>
+      </key>
+  </schema>
+</schemalist>

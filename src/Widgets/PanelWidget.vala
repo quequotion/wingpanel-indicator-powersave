@@ -1,5 +1,9 @@
 /*
+ * Wingpanel CPU frequency indicator
  * Copyright (c) 2018 Dirli <litandrej85@gmail.com>
+ *
+ * Wingpanel Powersave indicator
+ * Copyright (c) 2022-2022 Que Quotion <quequotion@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +20,7 @@
  *
  */
 
-namespace CPUfreq {
+namespace Powersave {
     public class Widgets.PanelWidget : Gtk.Label {
         public PanelWidget () {
             width_chars = 7;

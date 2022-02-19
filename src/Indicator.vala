@@ -1,5 +1,9 @@
 /*
+ * Wingpanel CPU frequency indicator
  * Copyright (c) 2018-2020 Dirli <litandrej85@gmail.com>
+ *
+ * Wingpanel Powersave indicator
+ * Copyright (c) 2022-2022 Que Quotion <quequotion@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +20,7 @@
  *
  */
 
-namespace CPUfreq {
+namespace Powersave {
     public const string CPU_PATH = "/sys/devices/system/cpu/";
 
     public class Indicator : Wingpanel.Indicator {
@@ -32,23 +36,25 @@ namespace CPUfreq {
         private GLib.Settings settings;
 
         public Indicator () {
-            Object (code_name: "cpufreq-indicator",
+            Object (code_name: "powersave-indicator",
                     intel_pstate: GLib.FileUtils.test (CPU_PATH + "intel_pstate", FileTest.IS_DIR));
 
-            settings = new GLib.Settings ("io.elementary.desktop.wingpanel.cpufreq");
+            settings = new GLib.Settings ("io.elementary.desktop.wingpanel.powersave");
             on_changed_governor ();
 
             if (intel_pstate) {
                 on_changed_tb ();
-                on_changed_max ();
-                on_changed_min ();
 
                 settings.changed["turbo-boost"].connect (on_changed_tb);
-                settings.changed["pstate-max"].connect (on_changed_max);
-                settings.changed["pstate-min"].connect (on_changed_min);
             }
 
             settings.changed["governor"].connect (on_changed_governor);
+
+            settings.changed["hyperthreads"].connect (on_changed_ht);
+
+            settings.changed["gpu"].connect (on_changed_gpu);
+
+            settings.changed["system-wide"].connect (on_changed_sw);
 
             visible = Utils.can_manage ();
         }
@@ -80,16 +86,20 @@ namespace CPUfreq {
             Utils.set_turbo_boost (settings.get_boolean ("turbo-boost"));
         }
 
-        private void on_changed_max () {
-            Utils.set_freq_scaling ("max", settings.get_double ("pstate-max"));
-        }
-
-        private void on_changed_min () {
-            Utils.set_freq_scaling ("min", settings.get_double ("pstate-min"));
-        }
-
         protected void on_changed_governor () {
             Utils.set_governor (settings.get_string ("governor"));
+        }
+
+        private void on_changed_ht () {
+            Utils.set_ht (settings.get_boolean ("hyperthreads"));
+        }
+
+        private void on_changed_gpu () {
+            Utils.set_gpu (settings.get_boolean ("gpu"));
+        }
+
+        private void on_changed_sw () {
+            Utils.set_sw (settings.get_boolean ("system-wide"));
         }
 
         public unowned bool update () {
@@ -106,11 +116,11 @@ namespace CPUfreq {
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug ("Activating CPUFreq Indicator");
+    debug ("Activating Powersave Indicator");
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
     }
 
-    var indicator = new CPUfreq.Indicator ();
+    var indicator = new Powersave.Indicator ();
     return indicator;
 }

@@ -1,3 +1,11 @@
+wingpanel-indicator-powersave (0.0.1) testing; urgency=medium
+
+  * Rebrand wingpanel-indicator-cpufreq
+  * Remove CPU frequency adjustment
+  * Add toggles for throttlectl options
+
+ -- Que Quotion <quequotion@gmail.com> Sun, 20 Feb 2022 00:28:00 +0900
+
 wingpanel-indicator-cpufreq (3.0.0-1) bullseye; urgency=medium
 
   * Changed license on the GPL-3.0

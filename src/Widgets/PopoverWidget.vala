@@ -1,5 +1,9 @@
 /*
+ * Wingpanel CPU frequency indicator
  * Copyright (c) 2018-2020 Dirli <litandrej85@gmail.com>
+ *
+ * Wingpanel Powersave indicator
+ * Copyright (c) 2022-2022 Que Quotion <quequotion@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +20,7 @@
  *
  */
 
-namespace CPUfreq {
+namespace Powersave {
     public class Widgets.PopoverWidget : Gtk.Grid {
         private GLib.Settings settings;
         private Granite.Widgets.ModeButton gov_box;
@@ -30,11 +34,16 @@ namespace CPUfreq {
             this.settings = settings;
 
             int top = 0;
+
+            add_system_wide (top);
+
             if (pstate) {
-                top = add_turbo_boost (top);
+                add_turbo_boost (top);
             }
 
+            add_hyperthreads (top);
             add_governor (top);
+            add_gpu (top);
         }
 
         private int add_governor (int top) {
@@ -50,7 +59,8 @@ namespace CPUfreq {
             gov_box.orientation = Gtk.Orientation.VERTICAL;
             gov_vars = new string[10];
 
-            foreach (string gov in Utils.get_available_values ("governors")) {
+            //foreach (string gov in Utils.get_available_values ("governors")) {
+            foreach (string gov in Utils.get_available_values ()) {
                 gov = gov.chomp ();
                 int i = gov_box.append_text (gov);
 
@@ -84,38 +94,49 @@ namespace CPUfreq {
             separator.hexpand = true;
             attach (separator, 0, tb_top++, 2, 1);
 
-            var freq_label = new Gtk.Label (_("CPU frequency (%):"));
-            freq_label.halign = Gtk.Align.CENTER;
-            attach (freq_label, 0, tb_top++, 2, 1);
-
-            Gtk.Label min_label = new Gtk.Label (_("Min:"));
-            min_label.margin_start = 15;
-            attach (min_label, 0, tb_top, 1, 1);
-            Gtk.Scale min_scale = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 25, 100, 5);
-            min_scale.margin_start = 15;
-            min_scale.margin_end = 15;
-            min_scale.hexpand = true;
-            min_scale.set_value (Utils.get_freq_pct ("min"));
-            attach (min_scale, 1, tb_top++, 1, 1);
-
-            Gtk.Label max_label = new Gtk.Label (_("Max:"));
-            max_label.margin_start = 15;
-            attach (max_label, 0, tb_top, 1, 1);
-            Gtk.Scale max_scale = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 25, 100, 5);
-            max_scale.margin_start = 15;
-            max_scale.margin_end = 15;
-            max_scale.hexpand = true;
-            max_scale.set_value (Utils.get_freq_pct ("max"));
-            attach (max_scale, 1, tb_top++, 1, 1);
-
-            min_scale.value_changed.connect (() => {
-                settings.set_double ("pstate-min", min_scale.get_value ());
-            });
-            max_scale.value_changed.connect (() => {
-                settings.set_double ("pstate-max", max_scale.get_value ());
-            });
-
             return tb_top;
+        }
+
+        private int add_hyperthreads (int top) {
+            var ht_top = top;
+            var ht_switch = new Granite.SwitchModelButton ("Hyperthreads");
+            ht_switch.active = settings.get_boolean("hyperthreads");
+            settings.bind ("hypterthreads", ht_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+            attach (ht_switch, 0, ht_top++, 2, 1);
+
+            var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            separator.hexpand = true;
+            attach (separator, 0, ht_top++, 2, 1);
+
+            return ht_top;
+        }
+
+        private int add_gpu (int top) {
+            var gpu_top = top;
+            var gpu_switch = new Granite.SwitchModelButton ("GPU Performance");
+            gpu_switch.active = settings.get_boolean("gpu");
+            settings.bind ("gpu", gpu_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+            attach (gpu_switch, 0, gpu_top++, 2, 1);
+
+            var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            separator.hexpand = true;
+            attach (separator, 0, gpu_top++, 2, 1);
+
+            return gpu_top;
+        }
+
+        private int add_system_wide (int top) {
+            var sw_top = top;
+            var sw_switch = new Granite.SwitchModelButton ("System Performance");
+            sw_switch.active = settings.get_boolean("system-wide");
+            settings.bind ("system-wide", sw_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+            attach (sw_switch, 0, sw_top++, 2, 1);
+
+            var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            separator.hexpand = true;
+            attach (separator, 0, sw_top++, 2, 1);
+
+            return sw_top;
         }
     }
 }

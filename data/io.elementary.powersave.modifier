@@ -1,0 +1,46 @@
+#!/bin/bash
+
+while getopts "g:t:h:v:s:" opt; do
+    case ${opt} in
+        g)
+            line=$(cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_available_governors)
+            for word in $line; do
+                if [[ $word = $OPTARG ]]; then
+                    governor=$word
+                    break
+                fi
+            done
+            if [[ -n $governor ]]; then
+                throttlectl gov $governor
+            fi
+        ;;
+        t)
+            if [[ $OPTARG == "on" ]]; then
+                throttlectl turbo full
+            elif [[ $OPTARG == "off" ]]; then
+                throttlectl turbo cut
+            fi
+        ;;
+        h)
+            if [[ $OPTARG == "on" ]]; then
+                throttlectl ht full
+            elif [[ $OPTARG == "off" ]]; then
+                throttlectl ht cut
+            fi
+        ;;
+        v)
+            if [[ $OPTARG == "on" ]]; then
+                throttlectl gpu full
+            elif [[ $OPTARG == "off" ]]; then
+                throttlectl gpu cut
+            fi
+        ;;
+        s)
+            if [[ $OPTARG == "on" ]]; then
+                throttlectl full
+            elif [[ $OPTARG == "off" ]]; then
+                throttlectl cut
+            fi
+        ;;
+    esac
+done

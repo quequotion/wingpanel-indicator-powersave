@@ -35,15 +35,3 @@ msgstr "выкл"
 #: Widgets/PopoverWidget.vala:29
 msgid "Your system does not support cpufreq"
 msgstr "Ваша система не поддерживает управление cpufreq"
-
-#: Widgets/PopoverWidget.vala:96
-msgid "CPU frequency (%):"
-msgstr "Частота проц. (%):"
-
-#: Widgets/PopoverWidget.vala:101
-msgid "Min:"
-msgstr "Мин:"
-
-#: Widgets/PopoverWidget.vala:112
-msgid "Max:"
-msgstr "Макс:"

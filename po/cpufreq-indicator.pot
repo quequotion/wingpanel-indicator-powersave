@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the cpufreq-indicator package.
+# This file is distributed under the same license as the powersave-indicator package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: cpufreq-indicator\n"
+"Project-Id-Version: powersave-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-16 18:31-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: Indicator.vala:24
-msgid "CPUfreq Indicator"
+msgid "Powersave Indicator"
 msgstr ""
 
 #: Indicator.vala:25
-msgid "CPUfreq Indicator is able to adjust the Intel p-state driver"
+msgid "Powersave Indicator is a user-discretion power management utility"
 msgstr ""
 
 #: Widgets/PanelWidget.vala:24
@@ -31,17 +31,5 @@ msgid "off"
 msgstr ""
 
 #: Widgets/PopoverWidget.vala:29
-msgid "Your system does not support cpufreq manage"
-msgstr ""
-
-#: Widgets/PopoverWidget.vala:96
-msgid "CPU frequency (%):"
-msgstr ""
-
-#: Widgets/PopoverWidget.vala:101
-msgid "Min:"
-msgstr ""
-
-#: Widgets/PopoverWidget.vala:112
-msgid "Max:"
+msgid "Your system does not support cpufreq"
 msgstr ""
