@@ -103,7 +103,7 @@ namespace Powersave {
         //public static string[] get_available_values (string path) {
         public static string[] get_available_values () {
             //string val_str = Utils.get_content (CPU_PATH + @"cpu0/cpufreq/scaling_available_$path");
-            string val_str = "powersave performance");
+            string val_str = "powersave performance";
             return val_str.split (" ");
         }
 
