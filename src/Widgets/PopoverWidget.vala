@@ -101,7 +101,7 @@ namespace Powersave {
             var ht_top = top;
             var ht_switch = new Granite.SwitchModelButton ("Hyperthreads");
             ht_switch.active = settings.get_boolean("hyperthreads");
-            settings.bind ("hypterthreads", ht_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+            settings.bind ("hyperthreads", ht_switch, "active", GLib.SettingsBindFlags.DEFAULT);
             attach (ht_switch, 0, ht_top++, 2, 1);
 
             var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
