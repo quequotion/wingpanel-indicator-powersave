@@ -1,5 +1,5 @@
 # Wingpanel Powersave indicator
-wingpanel-indicator-powersave is a user-discretion power management utility, serving as a front-end to [throttlectl](https://github.com/quequotion/pantheon-qq/tree/master/throttlectl), a command-line user-discretion power management utility written in bash.
+wingpanel-indicator-powersave is a user-discretion power management utility, serving as a frontend to [throttlectl](https://github.com/quequotion/pantheon-qq/tree/master/throttlectl), a command-line user-discretion power management utility written in bash.
 
 ---
 
@@ -33,11 +33,11 @@ wingpanel-indicator-powersave is a user-discretion power management utility, ser
     curl https://raw.githubusercontent.com/quequotion/pantheon-qq/master/throttlectl/throttlectl -o throttlectl
     sudo install -Dm755 {,/usr/bin/}throttlectl
     curl https://raw.githubusercontent.com/quequotion/pantheon-qq/master/throttlectl/performance -o performance
-    install -Dm644 {,/etc/throttle.d/}performance
+    sudo install -Dm644 {,/etc/throttle.d/}performance
     curl https://raw.githubusercontent.com/quequotion/pantheon-qq/master/throttlectl/powersave -o powersave
-    install -Dm644 {,/etc/throttle.d/}powersave
+    sudo install -Dm644 {,/etc/throttle.d/}powersave
     curl https://raw.githubusercontent.com/quequotion/pantheon-qq/master/throttlectl/throttle-cut.service -o throttle-cut.service
-    install -Dm644 {,/etc/systemd/system/}throttle-cut.service
+    sudo install -Dm644 {,/etc/systemd/system/}throttle-cut.service
 
 ### For Archlinux and derivatives (Manjaro, Artix, etc)
 
