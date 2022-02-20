@@ -41,4 +41,4 @@ wingpanel-indicator-powersave is a user-discretion power management utility, ser
 
 ### For Archlinux and derivatives (Manjaro, Artix, etc)
 
-A package is available in the AUR: [wingpanel-indicator-powersave-git](https://aur.archlinux.org/wingpanel-indicator-powersave-git).See the comments there for instructions on building it (without an AUR helper).
+A package is available in the AUR: [wingpanel-indicator-powersave-git](https://aur.archlinux.org/packages/wingpanel-indicator-powersave-git). See the comments there for instructions on building it (without an AUR helper).
