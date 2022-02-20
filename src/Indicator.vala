@@ -67,10 +67,9 @@ namespace Powersave {
 
             settings.set_boolean ("governor", def_gov != "performance" ? false : true);
 
-            //string def_gpu = Utils.run_cli (nvidia-settings);
-            //How shall we parse?
+            string def_gpu = Utils.get_content ("/etc/throttle.d/powermizer");
 
-            //settings.set_boolean ("gpu", def_gpu > "0" ? true : false);
+            settings.set_boolean ("gpu", def_gpu != "0" ? true : false);
             //0 = powersave; 1 = performance; 2 = abomination
 
             settings.changed["gpu"].connect (on_changed_gpu);
