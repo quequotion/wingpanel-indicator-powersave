@@ -43,57 +43,35 @@ namespace Powersave {
 
             string def_sw = Utils.get_content ("/etc/throttle.d/systemstate");
 
-            if (def_sw != "on") {
-                settings.set_boolean ("system-wide", true);
-            } else {
-                settings.set_boolean ("system-wide", false);
-            }
+            settings.set_boolean ("system-wide", def_sw != "0" ? true : false);
 
-            //on_changed_sw ();
+            settings.changed["system-wide"].connect (on_changed_sw);
 
             if (intel_pstate) {
-
                 string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
-                //on_changed_tb ();
-
+                
+                settings.set_boolean ("turbo-boost", def_boost != "0" ? true : false);
+                
                 settings.changed["turbo-boost"].connect (on_changed_tb);
             }
 
             string def_ht = Utils.get_content (CPU_PATH + "smt/control");
 
-            if (def_ht != "on") {
-                settings.set_boolean ("hyperthreads", false);
-            } else {
-                settings.set_boolean ("hyperthreads", true);
-            }
-
-            //on_changed_ht ();
-
-            string def_governor = Utils.get_content (CPU_PATH + "cpu0/cpufreq/scaling_governor");
-
-            if (def_governor != "performance") {
-                settings.set_boolean ("governor", false);
-            } else {
-                settings.set_boolean ("governor", true);
-            }
-
-            //on_changed_governor ();
-
-            //string def_gpu = Utils.get_content (CPU_PATH + "smt/control");
-
-            //if (def_gpu != "on") {
-            //    settings.set_boolean ("gpu", true);
-            //} else {
-            //    settings.set_boolean ("gpu", false);
-            //}
-
-            //on_changed_gpu ();
-
-            settings.changed["system-wide"].connect (on_changed_sw);
+            settings.set_boolean ("hyperthreads", def_ht != "on" ? false : true);
 
             settings.changed["hyperthreads"].connect (on_changed_ht);
 
+            string def_gov = Utils.get_content (CPU_PATH + "cpu0/cpufreq/scaling_governor");
+
             settings.changed["governor"].connect (on_changed_governor);
+
+            settings.set_boolean ("governor", def_gov != "performance" ? false : true);
+
+            //string def_gpu = Utils.run_cli (nvidia-settings);
+            //How shall we parse?
+
+            //settings.set_boolean ("gpu", def_gpu > "0" ? true : false);
+            //0 = powersave; 1 = performance; 2 = abomination
 
             settings.changed["gpu"].connect (on_changed_gpu);
 
