@@ -23,8 +23,6 @@
 namespace Powersave {
     public class Widgets.PopoverWidget : Gtk.Grid {
         private GLib.Settings settings;
-        private Granite.Widgets.ModeButton gov_box;
-        private string[] gov_vars;
 
         public PopoverWidget (GLib.Settings settings, bool pstate) {
             orientation = Gtk.Orientation.HORIZONTAL;
@@ -48,39 +46,16 @@ namespace Powersave {
 
         private int add_governor (int top) {
             var g_top = top;
-
-            string current_governor = Utils.get_governor ();
+            var g_switch = new Granite.SwitchModelButton ("CPU Performance");
+            g_switch.active = settings.get_boolean("governor");
+            settings.bind ("governor", g_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+            attach (g_switch, 0, g_top++, 2, 1);
 
             var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
             separator.hexpand = true;
             attach (separator, 0, g_top++, 2, 1);
 
-            gov_box = new Granite.Widgets.ModeButton ();
-            gov_box.orientation = Gtk.Orientation.VERTICAL;
-            gov_vars = new string[10];
-
-            //foreach (string gov in Utils.get_available_values ("governors")) {
-            foreach (string gov in Utils.get_available_values ()) {
-                gov = gov.chomp ();
-                int i = gov_box.append_text (gov);
-
-                if (gov == current_governor) {
-                    gov_box.selected = i;
-                }
-
-                gov_vars[i] = gov;
-            }
-
-            attach (gov_box, 0, g_top++, 2, 1);
-            gov_box.mode_changed.connect (toggled_governor);
-
             return g_top;
-        }
-
-        private unowned void toggled_governor () {
-            if (Utils.get_permission ().allowed) {
-                settings.set_string ("governor", gov_vars[gov_box.selected]);
-            }
         }
 
         private int add_turbo_boost (int top) {

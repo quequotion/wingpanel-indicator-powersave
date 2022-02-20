@@ -26,61 +26,49 @@ namespace Powersave {
             return GLib.FileUtils.test (CPU_PATH + "cpu0/cpufreq", FileTest.IS_DIR);
         }
 
-        public static void set_turbo_boost (bool state) {
-            string state_str = state ? "0" : "1";
-            string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
+        public static void set_sw (bool state) {
 
-            if (def_boost != state_str && Utils.get_permission ().allowed) {
-                string cli_cmd = @"-t $(state ? "on" : "off")";
+            if (Utils.get_permission ().allowed) {
+                string cli_cmd = @"-s $(state ? "full" : "cut")";
 
                 Utils.run_cli (cli_cmd);
             }
         }
 
-        public static string get_governor () {
-            return Utils.get_content (CPU_PATH + "cpu0/cpufreq/scaling_governor");
-        }
+        public static void set_turbo_boost (bool state) {
 
-        public static void set_governor (string governor) {
-            string def_governor = Utils.get_governor ();
+            if (Utils.get_permission ().allowed) {
+                string cli_cmd = @"-t $(state ? "full" : "cut")";
 
-            if (governor != "" && def_governor != governor) {
-                string cli_cmd = " -g " + governor;
                 Utils.run_cli (cli_cmd);
             }
         }
 
         public static void set_ht (bool state) {
-            string state_str = state ? "0" : "1";
-            string def_ht = Utils.get_content (CPU_PATH + "smt/control");
 
-            if (def_ht != state_str && Utils.get_permission ().allowed) {
-                string cli_cmd = @"-h $(state ? "on" : "off")";
+            if (Utils.get_permission ().allowed) {
+                string cli_cmd = @"-h $(state ? "full" : "cut")";
+
+                Utils.run_cli (cli_cmd);
+            }
+        }
+
+        public static void set_governor (bool state) {
+
+            if (Utils.get_permission ().allowed) {
+                string cli_cmd = @"-g $(state ? "full" : "cut")";
 
                 Utils.run_cli (cli_cmd);
             }
         }
 
         public static void set_gpu (bool state) {
-            string state_str = state ? "0" : "1";
-            //string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
 
-            //if (def_gpu != state_str && Utils.get_permission ().allowed) {
-                string cli_cmd = @"-v $(state ? "on" : "off")";
+            if (Utils.get_permission ().allowed) {
+                string cli_cmd = @"-v $(state ? "full" : "cut")";
 
                 Utils.run_cli (cli_cmd);
-            //}
-        }
-
-        public static void set_sw (bool state) {
-            string state_str = state ? "0" : "1";
-            //string def_sw = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
-
-            //if (def_sw != state_str && Utils.get_permission ().allowed) {
-                string cli_cmd = @"-s $(state ? "on" : "off")";
-
-                Utils.run_cli (cli_cmd);
-            //}
+            }
         }
 
         public static string get_content (string file_path) {
@@ -98,13 +86,6 @@ namespace Powersave {
             }
 
             return content.chomp ();
-        }
-
-        //public static string[] get_available_values (string path) {
-        public static string[] get_available_values () {
-            //string val_str = Utils.get_content (CPU_PATH + @"cpu0/cpufreq/scaling_available_$path");
-            string val_str = "powersave performance";
-            return val_str.split (" ");
         }
 
         public static double get_cur_frequency () {

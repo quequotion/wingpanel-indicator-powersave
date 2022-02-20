@@ -3,12 +3,12 @@
   <schema path="/io/elementary/desktop/wingpanel/powersave/" id="io.elementary.desktop.wingpanel.powersave">
       <key type="b" name="system-wide">
         <default>true</default>
-        <summary>System-wide</summary>
-        <description>Saves the state of system-side runtime power management</description>
+        <summary>System Performance</summary>
+        <description>Saves the state of system-wide runtime power management</description>
       </key>
-      <key type="s" name="governor">
-        <default>""</default>
-        <summary>Governor</summary>
+      <key type="b" name="governor">
+        <default>true</default>
+        <summary>CPU Performance</summary>
         <description>Saves the state of the governor</description>
       </key>
       <key type="b" name="turbo-boost">
@@ -23,7 +23,7 @@
       </key>
       <key type="b" name="gpu">
         <default>true</default>
-        <summary>GPU</summary>
+        <summary>GPU Performance</summary>
         <description>Saves the state of the GPU power mode</description>
       </key>
   </schema>

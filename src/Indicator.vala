@@ -40,21 +40,62 @@ namespace Powersave {
                     intel_pstate: GLib.FileUtils.test (CPU_PATH + "intel_pstate", FileTest.IS_DIR));
 
             settings = new GLib.Settings ("io.elementary.desktop.wingpanel.powersave");
-            on_changed_governor ();
+
+            string def_sw = Utils.get_content ("/etc/throttle.d/systemstate");
+
+            if (def_sw != "on") {
+                settings.set_boolean ("system-wide", true);
+            } else {
+                settings.set_boolean ("system-wide", false);
+            }
+
+            //on_changed_sw ();
 
             if (intel_pstate) {
-                on_changed_tb ();
+
+                string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
+                //on_changed_tb ();
 
                 settings.changed["turbo-boost"].connect (on_changed_tb);
             }
 
-            settings.changed["governor"].connect (on_changed_governor);
+            string def_ht = Utils.get_content (CPU_PATH + "smt/control");
+
+            if (def_ht != "on") {
+                settings.set_boolean ("hyperthreads", false);
+            } else {
+                settings.set_boolean ("hyperthreads", true);
+            }
+
+            //on_changed_ht ();
+
+            string def_governor = Utils.get_content (CPU_PATH + "cpu0/cpufreq/scaling_governor");
+
+            if (def_governor != "performance") {
+                settings.set_boolean ("governor", false);
+            } else {
+                settings.set_boolean ("governor", true);
+            }
+
+            //on_changed_governor ();
+
+            //string def_gpu = Utils.get_content (CPU_PATH + "smt/control");
+
+            //if (def_gpu != "on") {
+            //    settings.set_boolean ("gpu", true);
+            //} else {
+            //    settings.set_boolean ("gpu", false);
+            //}
+
+            //on_changed_gpu ();
+
+            settings.changed["system-wide"].connect (on_changed_sw);
 
             settings.changed["hyperthreads"].connect (on_changed_ht);
 
-            settings.changed["gpu"].connect (on_changed_gpu);
+            settings.changed["governor"].connect (on_changed_governor);
 
-            settings.changed["system-wide"].connect (on_changed_sw);
+            settings.changed["gpu"].connect (on_changed_gpu);
 
             visible = Utils.can_manage ();
         }
@@ -87,7 +128,7 @@ namespace Powersave {
         }
 
         protected void on_changed_governor () {
-            Utils.set_governor (settings.get_string ("governor"));
+            Utils.set_governor (settings.get_boolean ("governor"));
         }
 
         private void on_changed_ht () {
