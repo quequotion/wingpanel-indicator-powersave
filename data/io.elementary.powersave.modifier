@@ -3,7 +3,7 @@
 while getopts "g:t:h:v:s:" opt; do
     case ${opt} in
         s)
-            throttlectl "${OPTARG}" &
+            throttlectl sys "${OPTARG}" &
         ;;
         t)
             throttlectl turbo "${OPTARG}" &
