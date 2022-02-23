@@ -41,17 +41,17 @@ namespace Powersave {
 
             settings = new GLib.Settings ("io.elementary.desktop.wingpanel.powersave");
 
-            string def_sw = Utils.get_content ("/etc/throttle.d/systemstate");
+            string def_sd = Utils.get_content ("/etc/throttle.d/systemstate");
 
-            settings.set_boolean ("system-wide", def_sw != "0" ? true : false);
+            settings.set_boolean ("system-dev", def_sd != "0" ? true : false);
 
-            settings.changed["system-wide"].connect (on_changed_sw);
+            settings.changed["system-dev"].connect (on_changed_sd);
 
             if (intel_pstate) {
                 string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
-                
+
                 settings.set_boolean ("turbo-boost", def_boost != "0" ? true : false);
-                
+
                 settings.changed["turbo-boost"].connect (on_changed_tb);
             }
 
@@ -100,6 +100,10 @@ namespace Powersave {
             return main_widget;
         }
 
+        private void on_changed_sd () {
+            Utils.set_sd (settings.get_boolean ("system-dev"));
+        }
+
         private void on_changed_tb () {
             Utils.set_turbo_boost (settings.get_boolean ("turbo-boost"));
         }
@@ -114,10 +118,6 @@ namespace Powersave {
 
         private void on_changed_gpu () {
             Utils.set_gpu (settings.get_boolean ("gpu"));
-        }
-
-        private void on_changed_sw () {
-            Utils.set_sw (settings.get_boolean ("system-wide"));
         }
 
         public unowned bool update () {

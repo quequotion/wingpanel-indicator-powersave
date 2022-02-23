@@ -26,7 +26,7 @@ namespace Powersave {
             return GLib.FileUtils.test (CPU_PATH + "cpu0/cpufreq", FileTest.IS_DIR);
         }
 
-        public static void set_sw (bool state) {
+        public static void set_sd (bool state) {
 
             if (Utils.get_permission ().allowed) {
                 string cli_cmd = @"-s $(state ? "full" : "cut")";

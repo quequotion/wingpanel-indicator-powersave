@@ -21,11 +21,11 @@ msgstr ""
 "Language: ru\n"
 
 #: Indicator.vala:24
-msgid "CPUfreq Indicator"
-msgstr "Индикатор частоты процессора"
+msgid "Powersave Indicator"
+msgstr "Индикатор Энергосберегающая"
 
 #: Indicator.vala:25
-msgid "CPUfreq Indicator is able to adjust the Intel p-state driver"
+msgid "Powersave Indicator is able to adjust the Intel p-state driver"
 msgstr "Индикатор способен настроить драйвер Intel p-state"
 
 #: Widgets/PanelWidget.vala:24
@@ -35,3 +35,23 @@ msgstr "выкл"
 #: Widgets/PopoverWidget.vala:29
 msgid "Your system does not support cpufreq"
 msgstr "Ваша система не поддерживает управление cpufreq"
+
+#: Widgets/PopoverWidget.vala:49
+msgid "System Performance"
+msgstr "производительность системы"
+
+#: Widgets/PopoverWidget.vala:63
+msgid "Turbo Boost"
+msgstr "Турбо ускорение"
+
+#: Widgets/PopoverWidget.vala:77
+msgid "Hyperthreads"
+msgstr "Одновременная многопоточность"
+
+#: Widgets/PopoverWidget.vala:91
+msgid "CPU Performance"
+msgstr "производительность процессора"
+
+#: Widgets/PopoverWidget.vala:105
+msgid "GPU Performance"
+msgstr "производительность графического"

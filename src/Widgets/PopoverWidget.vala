@@ -33,7 +33,7 @@ namespace Powersave {
 
             int top = 0;
 
-            top = add_system_wide (top);
+            top = add_system_dev (top);
 
             if (pstate) {
                 top = add_turbo_boost (top);
@@ -44,23 +44,23 @@ namespace Powersave {
             add_gpu (top);
         }
 
-        private int add_governor (int top) {
-            var g_top = top;
-            var g_switch = new Granite.SwitchModelButton ("CPU Performance");
-            g_switch.active = settings.get_boolean("governor");
-            settings.bind ("governor", g_switch, "active", GLib.SettingsBindFlags.DEFAULT);
-            attach (g_switch, 0, g_top++, 2, 1);
+        private int add_system_dev (int top) {
+            var sd_top = top;
+            var sd_switch = new Granite.SwitchModelButton (_("System Performance"));
+            sd_switch.active = settings.get_boolean("system-dev");
+            settings.bind ("system-dev", sd_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+            attach (sd_switch, 0, sd_top++, 2, 1);
 
             var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
             separator.hexpand = true;
-            attach (separator, 0, g_top++, 2, 1);
+            attach (separator, 0, sd_top++, 2, 1);
 
-            return g_top;
+            return sd_top;
         }
 
         private int add_turbo_boost (int top) {
             var tb_top = top;
-            var tb_switch = new Granite.SwitchModelButton ("Turbo Boost");
+            var tb_switch = new Granite.SwitchModelButton (_("Turbo Boost"));
             tb_switch.active = settings.get_boolean("turbo-boost");
             settings.bind ("turbo-boost", tb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
             attach (tb_switch, 0, tb_top++, 2, 1);
@@ -74,7 +74,7 @@ namespace Powersave {
 
         private int add_hyperthreads (int top) {
             var ht_top = top;
-            var ht_switch = new Granite.SwitchModelButton ("Hyperthreads");
+            var ht_switch = new Granite.SwitchModelButton (_("Hyperthreads"));
             ht_switch.active = settings.get_boolean("hyperthreads");
             settings.bind ("hyperthreads", ht_switch, "active", GLib.SettingsBindFlags.DEFAULT);
             attach (ht_switch, 0, ht_top++, 2, 1);
@@ -86,9 +86,23 @@ namespace Powersave {
             return ht_top;
         }
 
+        private int add_governor (int top) {
+            var g_top = top;
+            var g_switch = new Granite.SwitchModelButton (_("CPU Performance"));
+            g_switch.active = settings.get_boolean("governor");
+            settings.bind ("governor", g_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+            attach (g_switch, 0, g_top++, 2, 1);
+
+            var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            separator.hexpand = true;
+            attach (separator, 0, g_top++, 2, 1);
+
+            return g_top;
+        }
+
         private int add_gpu (int top) {
             var gpu_top = top;
-            var gpu_switch = new Granite.SwitchModelButton ("GPU Performance");
+            var gpu_switch = new Granite.SwitchModelButton (_("GPU Performance"));
             gpu_switch.active = settings.get_boolean("gpu");
             settings.bind ("gpu", gpu_switch, "active", GLib.SettingsBindFlags.DEFAULT);
             attach (gpu_switch, 0, gpu_top++, 2, 1);
@@ -98,20 +112,6 @@ namespace Powersave {
             attach (separator, 0, gpu_top++, 2, 1);
 
             return gpu_top;
-        }
-
-        private int add_system_wide (int top) {
-            var sw_top = top;
-            var sw_switch = new Granite.SwitchModelButton ("System Performance");
-            sw_switch.active = settings.get_boolean("system-wide");
-            settings.bind ("system-wide", sw_switch, "active", GLib.SettingsBindFlags.DEFAULT);
-            attach (sw_switch, 0, sw_top++, 2, 1);
-
-            var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-            separator.hexpand = true;
-            attach (separator, 0, sw_top++, 2, 1);
-
-            return sw_top;
         }
     }
 }

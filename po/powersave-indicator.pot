@@ -23,7 +23,7 @@ msgid "Powersave Indicator"
 msgstr ""
 
 #: Indicator.vala:25
-msgid "Powersave Indicator is a user-discretion power management utility"
+msgid "Powersave Indicator is able to adjust the Intel p-state driver"
 msgstr ""
 
 #: Widgets/PanelWidget.vala:24
@@ -32,4 +32,24 @@ msgstr ""
 
 #: Widgets/PopoverWidget.vala:29
 msgid "Your system does not support cpufreq"
+msgstr ""
+
+#: Widgets/PopoverWidget.vala:49
+msgid "System Devices"
+msgstr ""
+
+#: Widgets/PopoverWidget.vala:63
+msgid "Turbo Boost"
+msgstr ""
+
+#: Widgets/PopoverWidget.vala:77
+msgid "Hyperthreads"
+msgstr ""
+
+#: Widgets/PopoverWidget.vala:91
+msgid "CPU Performance"
+msgstr ""
+
+#: Widgets/PopoverWidget.vala:105
+msgid "GPU Performance"
 msgstr ""

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema path="/io/elementary/desktop/wingpanel/powersave/" id="io.elementary.desktop.wingpanel.powersave">
-      <key type="b" name="system-wide">
+      <key type="b" name="system-dev">
         <default>true</default>
         <summary>System Performance</summary>
-        <description>Saves the state of system-wide runtime power management</description>
-      </key>
-      <key type="b" name="governor">
-        <default>true</default>
-        <summary>CPU Performance</summary>
-        <description>Saves the state of the governor</description>
+        <description>Sets the state of system devices' runtime power management</description>
       </key>
       <key type="b" name="turbo-boost">
         <default>true</default>
         <summary>Turbo boost</summary>
-        <description>Saves the state of the Turbo boost</description>
+        <description>Activates or deactivates Turbo Boost</description>
       </key>
       <key type="b" name="hyperthreads">
         <default>true</default>
         <summary>Hyperthreads</summary>
-        <description>Saves the state of the hyperthreads</description>
+        <description>Activates or deactivates hyperthreads</description>
+      </key>
+      <key type="b" name="governor">
+        <default>true</default>
+        <summary>CPU Performance</summary>
+        <description>Selects the powersave or performance CPU governor</description>
       </key>
       <key type="b" name="gpu">
         <default>true</default>
         <summary>GPU Performance</summary>
-        <description>Saves the state of the GPU power mode</description>
+        <description>Sets adaptive or performance GPU power mode</description>
       </key>
   </schema>
 </schemalist>

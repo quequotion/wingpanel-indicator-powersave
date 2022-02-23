@@ -1,4 +1,4 @@
-# Wingpanel Powersave indicator
+# Wingpanel Powersave Indicator
 wingpanel-indicator-powersave is a user-discretion power management utility, serving as a frontend to [throttlectl](https://github.com/quequotion/pantheon-qq/tree/master/throttlectl), a command-line user-discretion power management utility written in bash.
 
 ---
