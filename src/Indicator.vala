@@ -29,7 +29,7 @@ namespace Powersave {
         private Widgets.PopoverWidget? main_widget = null;
         private uint timeout_id = 0;
 
-        public bool intel_pstate {
+        public bool turbo {
             get; construct set;
         }
 
@@ -37,7 +37,8 @@ namespace Powersave {
 
         public Indicator () {
             Object (code_name: "powersave-indicator",
-                    intel_pstate: GLib.FileUtils.test (CPU_PATH + "intel_pstate", FileTest.IS_DIR));
+                    turbo: GLib.FileUtils.test (CPU_PATH + "intel_pstate", FileTest.IS_DIR) ||
+                           GLib.FileUtils.test (CPU_PATH + "cpufreq/boost", FileTest.EXISTS));
 
             settings = new GLib.Settings ("io.elementary.desktop.wingpanel.powersave");
 
@@ -47,10 +48,13 @@ namespace Powersave {
 
             settings.changed["system-dev"].connect (on_changed_sd);
 
-            if (intel_pstate) {
-                string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo");
+            if (turbo) {
+                string def_boost = Utils.get_content (CPU_PATH + "intel_pstate/no_turbo") ??
+                                   Utils.get_content (CPU_PATH + "cpufreq/boost");
 
-                settings.set_boolean ("turbo-boost", def_boost != "0" ? true : false);
+                GLib.FileUtils.test (CPU_PATH + "intel_pstate", FileTest.IS_DIR) ?
+                    settings.set_boolean ("turbo-boost", def_boost != "0" ? false : true) :
+                    settings.set_boolean ("turbo-boost", def_boost != "0" ? true : false);
 
                 settings.changed["turbo-boost"].connect (on_changed_tb);
             }
@@ -91,7 +95,7 @@ namespace Powersave {
         public override Gtk.Widget? get_widget () {
             if (main_widget == null) {
                 if (visible) {
-                    main_widget = new Widgets.PopoverWidget (settings, intel_pstate);
+                    main_widget = new Widgets.PopoverWidget (settings, turbo);
                 } else {
                     return null;
                 }

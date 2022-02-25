@@ -24,7 +24,7 @@ namespace Powersave {
     public class Widgets.PopoverWidget : Gtk.Grid {
         private GLib.Settings settings;
 
-        public PopoverWidget (GLib.Settings settings, bool pstate) {
+        public PopoverWidget (GLib.Settings settings, bool turbo) {
             orientation = Gtk.Orientation.HORIZONTAL;
             hexpand = true;
             row_spacing = 2;
@@ -35,7 +35,7 @@ namespace Powersave {
 
             top = add_system_dev (top);
 
-            if (pstate) {
+            if (turbo) {
                 top = add_turbo_boost (top);
             }
 
